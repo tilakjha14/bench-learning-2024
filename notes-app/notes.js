@@ -1,33 +1,59 @@
 const fs = require("fs");
-const getNotes = function () {
-  return "Notes returned form notes.js";
-};
+const chalk = require("chalk");
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
   const notes = loadNotes();
+  const duplicateNote = notes.find((note) => note.title === title);
 
-  const duplicateNote = notes.filter(function (note) {
-    return note.title === title;
-  });
-
-  if (duplicateNote.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body,
     });
     saveNotes(notes);
-    console.log("New Note added successfully");
+    console.log(chalk.green.inverse("New Note added successfully"));
   } else {
-    console.log("Duplicate note ");
+    console.log(chalk.red.inverse("Duplicate note "));
   }
 };
 
-const saveNotes = function (notes) {
+const removeNote = (title) => {
+  const notes = loadNotes();
+  const notesToKeep = notes.filter((note) => note.title !== title);
+  if (notes.length > notesToKeep.length) {
+    saveNotes(notesToKeep);
+    console.log(chalk.bgGreen("Note Removed"));
+  } else {
+    console.log(chalk.bgRed("No Note Removed"));
+  }
+};
+
+const listNotes = () => {
+  const notes = loadNotes();
+  console.log(chalk.blue("Your Notes:-"));
+  notes.forEach((element) => {
+    console.log(chalk.blue(element.title));
+  });
+};
+
+const readNotes = (title) => {
+  const notes = loadNotes();
+
+  const note = notes.find((note) => note.title === title);
+  if (note) {
+    console.log(chalk.green("Note Found"));
+    console.log(chalk.green(note.title) + " " + note.body);
+  } else {
+    console.log(chalk.red("Note not found"));
+  }
+};
+
+const saveNotes = (notes) => {
   const dataJson = JSON.stringify(notes);
   fs.writeFileSync("notes.json", dataJson);
 };
 
-const loadNotes = function () {
+const loadNotes = () => {
   try {
     const dataBuffer = fs.readFileSync("notes.json");
     const dataJSON = dataBuffer.toString();
@@ -38,6 +64,8 @@ const loadNotes = function () {
 };
 
 module.exports = {
-  getNotes: getNotes,
   addNote: addNote,
+  removeNote: removeNote,
+  listNotes: listNotes,
+  readNotes: readNotes,
 };
