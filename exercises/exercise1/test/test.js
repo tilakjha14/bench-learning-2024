@@ -16,8 +16,4 @@ describe("Arithmetic API", () => {
         done();
       });
   });
-
-  // Write similar tests for other arithmetic operations
-
-  // Write tests for edge cases and error handling
 });
