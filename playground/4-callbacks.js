@@ -11,12 +11,25 @@
 //   console.log(data);
 // });
 
-const add = (x, y, callback) => {
+// const add = (x, y, callback) => {
+//   setTimeout(() => {
+//     const sum = x + y;
+//     callback(sum);
+//   }, 2000);
+// };
+// add(1, 4, (sum) => {
+//   console.log(sum);
+// });
+
+const doWorkCallback = (callback) => {
   setTimeout(() => {
-    const sum = x + y;
-    callback(sum);
+    // callback("This is error", undefined);
+    callback(undefined, [1, 2, 3]);
   }, 2000);
 };
-add(1, 4, (sum) => {
-  console.log(sum);
+doWorkCallback((error, result) => {
+  if (error) {
+    return console.log("error=", error);
+  }
+  console.log("result=", result);
 });

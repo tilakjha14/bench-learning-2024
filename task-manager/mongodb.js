@@ -68,18 +68,84 @@ async function run() {
 
     // const result = await collection.find(query).next();
 
+    // await client.connect();
+    // const database = client.db("task-manager");
+    // const collection = database.collection("tasks");
+    // const query1 = {
+    //   _id: new ObjectId("664323a94208546e56a6824f"),
+    // };
+    // const result = await collection.findOne(query1);
+
+    // const result2 = await collection.find({ isCompleted: false }).toArray();
+
+    // // Log the result
+    // console.log("result=", result, " result2=", result2);
+
+    //Update field
+
+    // await client.connect();
+    // const database = client.db("task-manager");
+    // const collection = database.collection("tasks");
+    // const updateTask = await collection.updateOne(
+    //   { task: "Task 3" },
+    //   {
+    //     $set: {
+    //       task: "Task 3 updated",
+    //     },
+    //   }
+    // );
+    // console.log("updateTask=", updateTask);
+
     await client.connect();
     const database = client.db("task-manager");
-    const collection = database.collection("tasks");
-    const query1 = {
-      _id: new ObjectId("664323a94208546e56a6824f"),
-    };
-    const result = await collection.findOne(query1);
+    const collection = database.collection("users");
+    // const updateAge = await collection.updateOne(
+    //   { _id: new ObjectId("66430cf70135503b83d98717") },
+    //   {
+    //     $inc: { age: 100 },
+    //   }
+    // );
+    // console.log("updateAge=", updateAge);
 
-    const result2 = await collection.find({ isCompleted: false }).toArray();
+    // await collection
+    //   .updateOne(
+    //     { _id: new ObjectId("66430cf70135503b83d98717") },
+    //     {
+    //       $inc: { age: 1 },
+    //     }
+    //   )
+    //   .then((result) => {
+    //     console.log("result=", result);
+    //   })
+    //   .catch((error) => {
+    //     console.log("error=", error);
+    //   });
 
-    // Log the result
-    console.log("result=", result, " result2=", result2);
+    // await collection
+    //   .updateMany(
+    //     { name1: "Tilak1233434" },
+    //     {
+    //       $set: {
+    //         name12: "Tilak J",
+    //       },
+    //     }
+    //   )
+    //   .then((result) => {
+    //     console.log("Success=", result);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error=", error);
+    //   });
+
+    //deleting field
+    await collection
+      .deleteOne({ name: "Stefano" })
+      .then((result) => {
+        console.log("result=", result);
+      })
+      .catch((error) => {
+        console.log("error=", error);
+      });
   } finally {
     // Ensures that the client will close when you finish/error
 
